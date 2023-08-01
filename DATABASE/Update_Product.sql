@@ -4,7 +4,7 @@
     @Product_Name varchar(200),
     @Product_Description varchar(200),
     --@Product_Image nvarchar(200),
-    @Product_Gender nvarchar(200),
+    --@Product_Gender nvarchar(200),
     --@Product_Type_ID int,
     @Product_Price float,
     @Product_Quantity int
@@ -15,7 +15,7 @@ AS
     Product_Name = @Product_Name,
     Product_Description = @Product_Description,
     --@Product_Image ,
-    Product_Gender = @Product_Gender,
+    --Product_Gender = @Product_Gender,
     --@Product_Type_ID ,
     Product_Price = @Product_Price,
     Product_Quantity = @Product_Quantity

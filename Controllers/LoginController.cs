@@ -32,12 +32,13 @@ namespace unitee_supplier_backend.Controllers
             {
                 reader.Read();
                 var role = Convert.ToInt32(reader["User_Role"]);
+                var id = Convert.ToInt32(reader["User_ID"]);
                 conn.Close();
 
                 // Here you map the role integer to the respective role string
                 string roleString = RoleMapper(role);
 
-                return Ok(new { message = "Successfully Login", role = roleString });
+                return Ok(new { message = "Successfully Login", role = roleString, id });
             }
             else
             {

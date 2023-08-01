@@ -1,4 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[Create_Product]
+    @User_ID int,
     @Department_ID int,
     @Product_Name varchar(200),
     @Product_Description varchar(200),
@@ -13,6 +14,7 @@ AS
 
     INSERT INTO dbo.Product
     (
+        User_ID,
         Department_ID,
         Product_Name,
         Product_Description,
@@ -24,6 +26,7 @@ AS
     )
     VALUES
     (
+        @User_ID,
         @Department_ID,
         @Product_Name,
         @Product_Description,

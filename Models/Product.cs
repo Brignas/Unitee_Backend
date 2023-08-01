@@ -8,6 +8,7 @@ namespace unitee_supplier_backend.Models
 {
     public class Product
     {
+        public int User_ID { get; set; }
         public int Product_ID { get; set; }
         public int Department_ID { get; set; }
         public string Product_Name { get; set; }

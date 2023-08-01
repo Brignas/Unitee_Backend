@@ -53,6 +53,7 @@ namespace unitee_supplier_backend.Controllers
             conn.Open();
             SqlCommand cmd = new SqlCommand("Create_Product", conn);
             cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@User_ID", product.User_ID);
             cmd.Parameters.AddWithValue("@Department_ID", product.Department_ID);
             cmd.Parameters.AddWithValue("@Product_Name", product.Product_Name);
             cmd.Parameters.AddWithValue("@Product_Description", product.Product_Description);
@@ -152,7 +153,7 @@ namespace unitee_supplier_backend.Controllers
             cmd.Parameters.AddWithValue("@Department_ID", product.Department_ID);
             cmd.Parameters.AddWithValue("@Product_Name", product.Product_Name);
             cmd.Parameters.AddWithValue("@Product_Description", product.Product_Description);
-            cmd.Parameters.AddWithValue("@Product_Gender", product.Product_Gender);
+            //cmd.Parameters.AddWithValue("@Product_Gender", product.Product_Gender);
             //cmd.Parameters.AddWithValue("@Product_Type_ID", product.Product_Type_ID);
             cmd.Parameters.AddWithValue("@Product_Price", product.Product_Price);
             cmd.Parameters.AddWithValue("@Product_Quantity", product.Product_Quantity);
