@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[Size] (
+    [Size_ID] INT NOT NULL IDENTITY,
+    [Size_Name] NVARCHAR(10) NOT NULL,
+    PRIMARY KEY CLUSTERED ([Size_ID] ASC)
+);

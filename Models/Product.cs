@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 
@@ -16,6 +17,5 @@ namespace unitee_supplier_backend.Models
         public int Product_Type_ID { get; set; }
         public float Product_Price { get; set; }
         public int Product_Quantity { get; set; }
-        public int Product_Size { get; set; }
     }
 }

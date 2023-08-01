@@ -9,7 +9,6 @@
     [Product_Price]       FLOAT (53)     NOT NULL,
     [Product_IsActive]    BIT            NOT NULL DEFAULT 1,
     [Product_Quantity]    INT            NOT NULL DEFAULT 1,
-    [Product_Size] INT NULL, 
     [User_ID] INT NULL, 
     PRIMARY KEY CLUSTERED ([Product_ID] ASC),
     FOREIGN KEY ([Department_ID]) REFERENCES [dbo].[Department] ([Department_ID])

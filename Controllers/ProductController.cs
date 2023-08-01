@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Web.Http;
 using Newtonsoft.Json;
 using unitee_supplier_backend.Models;
@@ -49,37 +50,28 @@ namespace unitee_supplier_backend.Controllers
         [Route("AddProduct")]
         public string Create_Product(Product product)
         {
-            string msg = string.Empty;
             conn.Open();
             SqlCommand cmd = new SqlCommand("Create_Product", conn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Department_ID", product.Department_ID);
             cmd.Parameters.AddWithValue("@Product_Name", product.Product_Name);
             cmd.Parameters.AddWithValue("@Product_Description", product.Product_Description);
-            cmd.Parameters.AddWithValue("@Product_Image", product.Product_Image);
             cmd.Parameters.AddWithValue("@Product_Gender", product.Product_Gender);
-            cmd.Parameters.AddWithValue("@Product_Type_ID", product.Product_Type_ID);
+            //cmd.Parameters.AddWithValue("@Product_Type_ID", product.Product_Type_ID);
             cmd.Parameters.AddWithValue("@Product_Price", product.Product_Price);
             cmd.Parameters.AddWithValue("@Product_Quantity", product.Product_Quantity);
-            cmd.Parameters.AddWithValue("@Product_Size", product.Product_Size);
-            int i = cmd.ExecuteNonQuery();
-            if(i > 0)
-            {
-                msg = "Added Succesfully";
-            }
-            else
-            {
-                msg = "Misssing Fields";
-            }
+            //cmd.Parameters.AddWithValue("@Size_ID", size.Size_ID);
+            cmd.ExecuteNonQuery();
             conn.Close();
-            return msg;
+
+            return "Added Successfully";
         }
 
         [HttpPost]
-        [Route("ProductSizes")]
-        public List<ProductSize> ProductSizes()
+        [Route("Sizes")]
+        public List<Size> ProductSizes()
         {
-            List<ProductSize> productSizes = new List<ProductSize>();
+            List<Size> sizes = new List<Size>();
             try
             {
                 conn.Open();
@@ -87,12 +79,12 @@ namespace unitee_supplier_backend.Controllers
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    ProductSize productSize = new ProductSize
+                    Size size = new Size
                     {
                         Size_ID = Convert.ToInt32(reader["Size_ID"]),
                         Size_Name = reader["Size_Name"].ToString()
                     };
-                    productSizes.Add(productSize);
+                    sizes.Add(size);
                 }
                 reader.Close();
             }
@@ -104,7 +96,7 @@ namespace unitee_supplier_backend.Controllers
             {
                 conn.Close();
             }
-            return productSizes;
+            return sizes;
         }
 
         [HttpPost]
@@ -112,8 +104,8 @@ namespace unitee_supplier_backend.Controllers
         public List<Product> GetAllProducts()
         {
             List<Product> products = new List<Product>();
-            try
-            {
+            //try
+            //{
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("Read_All_Products", conn);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -126,29 +118,88 @@ namespace unitee_supplier_backend.Controllers
                         , Product_Name = reader["Product_Name"].ToString()
                         ,
                         Product_Description = reader["Product_Description"].ToString()
-                        ,
-                        Product_Image = reader["Product_Image"].ToString()
+                        //Product_Image = reader["Product_Image"].ToString()
                         ,
                         Product_Gender = reader["Product_Gender"].ToString()
-                        ,
-                        Product_Type_ID = Int32.Parse(reader["Product_Type_ID"].ToString())
+                        //Product_Type_ID = Int32.Parse(reader["Product_Type_ID"].ToString())
                         , Product_Price = float.Parse(reader["Product_Price"].ToString())
                         , Product_Quantity = Int32.Parse(reader["Product_Quantity"].ToString())
-                        , Product_Size = Int32.Parse(reader["Product_Size"].ToString())
+                       // , Sizes = Int32.Parse(reader["Product_Size"].ToString())
                     };
                     products.Add(product);
                 }
                 reader.Close();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            finally
-            {
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw;
+            //}
+            //finally
+            //{
                 conn.Close();
-            }
+            //}
             return products;
+        }
+
+        [HttpPost]
+        [Route("UpdateProduct")]
+        public string Update_Product(Product product)
+        {
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("Update_Product", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Product_ID", product.Product_ID);
+            cmd.Parameters.AddWithValue("@Department_ID", product.Department_ID);
+            cmd.Parameters.AddWithValue("@Product_Name", product.Product_Name);
+            cmd.Parameters.AddWithValue("@Product_Description", product.Product_Description);
+            cmd.Parameters.AddWithValue("@Product_Gender", product.Product_Gender);
+            //cmd.Parameters.AddWithValue("@Product_Type_ID", product.Product_Type_ID);
+            cmd.Parameters.AddWithValue("@Product_Price", product.Product_Price);
+            cmd.Parameters.AddWithValue("@Product_Quantity", product.Product_Quantity);
+            //cmd.Parameters.AddWithValue("@Size_ID", size.Size_ID);
+            cmd.ExecuteNonQuery();
+            conn.Close();
+
+            return "Update Successfully";
+        }
+        [HttpGet]
+        [Route("Products/{id}")]
+        public Product GetProductById(int id)
+        {
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("Read_Product_By_ID", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Product_ID", id);
+
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            Product product = null;
+
+            if (reader.Read())
+            {
+                product = new Product()
+                {
+                    Product_ID = Int32.Parse(reader["Product_ID"].ToString())
+                    ,
+                    Department_ID = Int32.Parse(reader["Department_ID"].ToString())
+                    ,
+                    Product_Name = reader["Product_Name"].ToString()
+                    ,
+                    Product_Description = reader["Product_Description"].ToString()
+                    //Product_Image = reader["Product_Image"].ToString()
+                    ,
+                    Product_Gender = reader["Product_Gender"].ToString()
+                    //Product_Type_ID = Int32.Parse(reader["Product_Type_ID"].ToString())
+                    ,
+                    Product_Price = float.Parse(reader["Product_Price"].ToString())
+                    ,
+                    Product_Quantity = Int32.Parse(reader["Product_Quantity"].ToString())
+                    // , Sizes = Int32.Parse(reader["Product_Size"].ToString())
+                };
+            }
+
+            conn.Close();
+            return product;
         }
     }
 }

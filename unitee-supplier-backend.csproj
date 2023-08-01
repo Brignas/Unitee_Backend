@@ -541,7 +541,7 @@
     </Compile>
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Product.cs" />
-    <Compile Include="Models\ProductSize.cs" />
+    <Compile Include="Models\Size.cs" />
     <Compile Include="Models\UserAccount.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
