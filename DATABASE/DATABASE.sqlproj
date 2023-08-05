@@ -80,9 +80,9 @@
     <Build Include="dbo\Stored Procedure\Product\Read_All_Department.sql" />
     <Build Include="dbo\Stored Procedure\Product\Read_All_Products.sql" />
     <Build Include="dbo\Stored Procedure\Register_Customer.sql" />
-    <Build Include="Size.sql" />
-    <Build Include="Update_Product.sql" />
     <Build Include="dbo\Stored Procedure\Product\Read_Product_By_ID.sql" />
+    <Build Include="dbo\Stored Procedure\Product\Update_Product.sql" />
+    <Build Include="dbo\Stored Procedure\Product\Deactivate_Product.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="DATABASE.refactorlog" />

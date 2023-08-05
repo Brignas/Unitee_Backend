@@ -18,5 +18,6 @@ namespace unitee_supplier_backend.Models
         public int Product_Type_ID { get; set; }
         public float Product_Price { get; set; }
         public int Product_Quantity { get; set; }
+        public bool Product_IsActive { get; set; }
     }
 }

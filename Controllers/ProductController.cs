@@ -163,6 +163,7 @@ namespace unitee_supplier_backend.Controllers
 
             return "Update Successfully";
         }
+
         [HttpGet]
         [Route("Products/{id}")]
         public Product GetProductById(int id)
@@ -196,11 +197,28 @@ namespace unitee_supplier_backend.Controllers
                     ,
                     Product_Quantity = Int32.Parse(reader["Product_Quantity"].ToString())
                     // , Sizes = Int32.Parse(reader["Product_Size"].ToString())
+                    ,
+                    Product_IsActive = bool.Parse(reader["Product_IsActive"].ToString())
                 };
             }
 
             conn.Close();
             return product;
+        }
+
+        [HttpPost]
+        [Route("UpdateStatus")]
+        public string Update_Status(Product product)
+        {
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("Deactivate_Product", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Product_ID", product.Product_ID);
+            cmd.Parameters.AddWithValue("@Product_IsActive", product.Product_IsActive);
+            cmd.ExecuteNonQuery();
+            conn.Close();
+
+            return "Update Successfully";
         }
     }
 }
